@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name = 'deep_clone'
-  s.version = '0.0.1'
-  s.date = '2011-09-19'
+  s.version = '0.0.2'
+  s.date = '2011-10-13'
   
   s.summary = "Ruby native deep clone"
   s.description = "Native implementation to create deep clones of Ruby objects"
