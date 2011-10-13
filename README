@@ -1,0 +1,10 @@
+Can be used as follows:
+
+require "deep_clone"
+o1 = Object.new
+o2 = DeepClone.clone o1
+
+Get the gem from the download section and install it using:
+
+gem install deep_clone-0.0.2.gem
+
