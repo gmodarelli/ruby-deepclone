@@ -4,6 +4,7 @@
 struct dump_call_arg {
   VALUE obj;
   VALUE tracker;
+  VALUE src;
 };
 
 VALUE DeepClone = Qnil;
@@ -12,7 +13,6 @@ void Init_deep_clone();
 
 VALUE deep_clone(int argc,VALUE argv);
 static VALUE clone_object(VALUE object, VALUE tracker);
-void inspect(const char *format, VALUE value);
 
 void Init_deep_clone()
 {
@@ -20,21 +20,15 @@ void Init_deep_clone()
   rb_define_module_function(DeepClone, "clone", deep_clone, 1);
 }
 
-static int clone_variable(ID key, VALUE entry, struct dump_call_arg *arg)
+static int clone_variable(st_data_t key, st_data_t index, struct dump_call_arg *arg)
 {
-  rb_ivar_set(arg->obj, key, clone_object(entry,arg->tracker));
+  VALUE val = ROBJECT_IVPTR(arg->src)[(long)index];
+  rb_ivar_set(arg->obj, key, clone_object(val,arg->tracker));
   return ST_CONTINUE;
-}
-
-void inspect(const char *format, VALUE value) {
-  VALUE foo = rb_inspect(value);
-  printf(format, RSTRING(foo)->as.heap.ptr);
 }
 
 static int hash_each(VALUE key, VALUE value, struct dump_call_arg *arg)
 {
-  inspect("HASH KEY VALUE: %s\n", key);
-  inspect("HASH VALUE VALUE: %s\n", value);
   rb_hash_aset(arg->obj,clone_object(key,arg->tracker),clone_object(value,arg->tracker));
   return ST_CONTINUE;
 }
@@ -64,7 +58,7 @@ static VALUE clone_object(VALUE object, VALUE tracker)
       case T_HASH:
         new_obj = rb_hash_new();
         rb_hash_aset(tracker,id,new_obj);
-        struct dump_call_arg arg = {new_obj,tracker};
+        struct dump_call_arg arg = {new_obj,tracker, object};
         rb_hash_foreach(object, hash_each, (st_data_t)&arg);
         break;
       case T_STRING:
@@ -79,15 +73,13 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         rb_hash_aset(tracker,id,new_obj);
         break;
       default:
-        inspect("OBJECT BEING PASSED: %s\n", object);
-        struct st_table *tbl = ROBJECT_IV_INDEX_TBL(object);
         new_obj = rb_obj_clone(object);
         rb_hash_aset(tracker,id,new_obj);
-        if (tbl) {
-          struct dump_call_arg arg = {new_obj,tracker};
+        st_table *tbl = ROBJECT_IV_INDEX_TBL(object);
+        if(tbl) {
+          struct dump_call_arg arg = {new_obj,tracker, object};
           st_foreach(tbl, clone_variable, (st_data_t)&arg);
         }
-        inspect("OBJECT THAT CAME OUT: %s\n", new_obj);
         break;
     }
   }
