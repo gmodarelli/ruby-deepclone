@@ -18,5 +18,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["ext", "lib"]
 
   s.files = ["deep_clone.gemspec","lib/deep_clone.rb","ext/deep_clone/deep_clone.c","ext/deep_clone/extconf.rb"]
- 
+
+  s.add_development_dependency 'rspec', '~> 2.13.0'
 end
