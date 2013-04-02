@@ -34,18 +34,18 @@ static VALUE clone_object(VALUE object, VALUE tracker)
 {
   VALUE new_obj;
   if(!rb_special_const_p(object)){
-    int id = rb_obj_id(object);
-    if(st_lookup(RHASH(tracker)->tbl, id, 0)){
+    VALUE id = rb_obj_id(object);
+    if(st_lookup(RHASH(tracker)->ntbl, id, 0)){
       new_obj = rb_hash_aref(tracker,id);
     }
     else
     {
       switch (BUILTIN_TYPE(object)) {
         case T_ARRAY:
-          new_obj = rb_ary_new2(RARRAY(object)->len);
+          new_obj = rb_ary_new2(RARRAY_LEN(object));
           rb_hash_aset(tracker,id,new_obj);
-          long len = RARRAY(object)->len;
-          VALUE *ptr = RARRAY(object)->ptr;
+          long len = RARRAY_LEN(object);
+          VALUE *ptr = RARRAY_PTR(object);
           while (len--) {
             rb_ary_push(new_obj,clone_object(*ptr,tracker));
             ptr++;
@@ -68,9 +68,9 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         default:
           new_obj = rb_obj_clone(object);
           rb_hash_aset(tracker,id,new_obj);
-          if (ROBJECT(object)->iv_tbl) {
+          if (ROBJECT_IV_INDEX_TBL(object)) {
             struct dump_call_arg arg = {new_obj,tracker};
-            st_foreach(ROBJECT(object)->iv_tbl, clone_variable, (st_data_t)&arg);
+            sa_foreach(ROBJECT_IV_INDEX_TBL(object), clone_variable, (st_data_t)&arg);
           }
           break;
       }
@@ -84,5 +84,5 @@ static VALUE clone_object(VALUE object, VALUE tracker)
 VALUE deep_clone(int argc,VALUE argv)
 {
   VALUE tracker = rb_hash_new();
-  clone_object(argv,tracker);
+  return clone_object(argv,tracker);
 }
