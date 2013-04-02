@@ -7,6 +7,14 @@ struct dump_call_arg {
   VALUE src;
 };
 
+#ifdef SA_EMPTY
+// Gotta do this because of 1.9.3's falcon patch
+#define TABLE_FOREACH sa_foreach
+#else
+// Make it work with vanilla ruby (including 2.0)
+#define TABLE_FOREACH st_foreach
+#endif
+
 VALUE DeepClone = Qnil;
 
 void Init_deep_clone();
@@ -78,7 +86,7 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         st_table *tbl = ROBJECT_IV_INDEX_TBL(object);
         if(tbl) {
           struct dump_call_arg arg = {new_obj,tracker, object};
-          st_foreach(tbl, clone_variable, (st_data_t)&arg);
+          TABLE_FOREACH(tbl, clone_variable, (st_data_t)&arg);
         }
         break;
     }
