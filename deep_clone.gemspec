@@ -6,13 +6,13 @@ Gem::Specification.new do |s|
   s.name = 'deep_clone'
   s.version = '0.0.2'
   s.date = '2011-10-13'
-  
+
   s.summary = "Ruby native deep clone"
   s.description = "Native implementation to create deep clones of Ruby objects"
 
   s.authors = ["Matthias Balmer"]
   s.email = 'balmma@sysinf.ch'
- 
+
   s.extensions = ["ext/deep_clone/extconf.rb"]
 
   s.require_paths = ["ext", "lib"]
@@ -20,4 +20,6 @@ Gem::Specification.new do |s|
   s.files = ["deep_clone.gemspec","lib/deep_clone.rb","ext/deep_clone/deep_clone.c","ext/deep_clone/extconf.rb"]
 
   s.add_development_dependency 'rspec', '~> 2.13.0'
+  s.add_development_dependency 'rake-compiler', '~> 0.8.3'
+  s.add_development_dependency 'rake', '~> 10.0.4'
 end
