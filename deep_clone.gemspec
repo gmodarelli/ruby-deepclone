@@ -4,14 +4,14 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name = 'deep_clone'
-  s.version = '0.0.2'
+  s.version = '0.0.3'
   s.date = '2011-10-13'
 
   s.summary = "Ruby native deep clone"
   s.description = "Native implementation to create deep clones of Ruby objects"
 
-  s.authors = ["Matthias Balmer"]
-  s.email = 'balmma@sysinf.ch'
+  s.authors = ["Matthias Balmer", "Andre Medeiros"]
+  s.email = ['balmma@sysinf.ch', 'me@andremedeiros.info']
 
   s.extensions = ["ext/deep_clone/extconf.rb"]
 
