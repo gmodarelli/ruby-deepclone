@@ -54,7 +54,13 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         break;
       case T_CLASS:
       case T_MODULE:
+      case T_FLOAT:
       case T_REGEXP:
+      case T_BIGNUM:
+      case T_NIL:
+      case T_TRUE:
+      case T_FALSE:
+      case T_FIXNUM:
         new_obj = object;
         rb_hash_aset(tracker,id,new_obj);
         break;
