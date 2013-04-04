@@ -25,8 +25,8 @@ struct dump_call_arg {
 #define RCLASS_IV_INDEX_TBL(c) (&RCLASS_EXT(c)->iv_index_tbl)
 
 #else
-
 // Make it work with vanilla ruby (including 2.0)
+#define RCLASS_IV_INDEX_TBL(c) (RCLASS(c)->iv_index_tbl)
 #define TABLE_FOREACH st_foreach
 
 #endif
