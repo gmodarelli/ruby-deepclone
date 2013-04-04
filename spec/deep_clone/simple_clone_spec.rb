@@ -48,5 +48,26 @@ describe DeepClone do
       expect(s1).to     eq(s2)
       expect(s1).to_not eql(s2.object_id)
     end
+
+    it 'should clone a Time' do
+      require 'time'
+
+      time = Time.now
+      expect(DeepClone.clone(time).object_id).to_not eql(time.object_id)
+    end
+
+    it 'should clone a DateTime' do
+      require 'time'
+
+      time = DateTime.now
+      expect(DeepClone.clone(time).object_id).to_not eql(time.object_id)
+    end
+
+    it 'should clone a Date' do
+      require 'date'
+
+      date = Date.today
+      expect(DeepClone.clone(date).object_id).to_not eql(date.object_id)
+    end
   end
 end
