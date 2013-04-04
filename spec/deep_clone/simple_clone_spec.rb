@@ -2,13 +2,43 @@ require 'spec_helper'
 
 describe DeepClone do
   describe '.clone' do
-    it 'should clone an integer' do
+    it 'should not clone an integer' do
       # Integers aren't "deep cloned, so their object ID should remaiin the
       # same.
       i1 = 1
       i2 = DeepClone.clone i1
 
       expect(i1).to eql(i2)
+    end
+
+    it 'should not clone a Bignum' do
+      bignum = 1e20.to_i
+      expect(DeepClone.clone(bignum).object_id).to eql(bignum.object_id)
+    end
+
+    it 'should not clone a float' do
+      float = 42.0
+      expect(DeepClone.clone(float).object_id).to eql(float.object_id)
+    end
+
+    it 'should not clone nil' do
+      nothing = nil
+      expect(DeepClone.clone(nothing).object_id).to eql(nothing.object_id)
+    end
+
+    it 'should not clone true' do
+      yes = true
+      expect(DeepClone.clone(yes).object_id).to eql(yes.object_id)
+    end
+
+    it 'should not clone false' do
+      no = false
+      expect(DeepClone.clone(no).object_id).to eql(no.object_id)
+    end
+
+    it 'should not clone a Symbol' do
+      symbol = :symbol
+      expect(DeepClone.clone(symbol).object_id).to eql(symbol.object_id)
     end
 
     it 'should clone a string' do
