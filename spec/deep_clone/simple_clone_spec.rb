@@ -69,5 +69,17 @@ describe DeepClone do
       date = Date.today
       expect(DeepClone.clone(date).object_id).to_not eql(date.object_id)
     end
+
+    it 'should not clone a literal Regexp' do
+      regex = /okay/
+      expect(DeepClone.clone(regex).object_id).to eql(regex.object_id)
+    end
+
+    it 'should clone a non-literal Regexp' do
+      pending "/okay/.clone is not normally allowed..." do
+        regex = Regexp.new('okay')
+        expect(DeepClone.clone(regex).object_id).to_not eql(regex.object_id)
+      end
+    end
   end
 end
