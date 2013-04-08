@@ -27,7 +27,13 @@ struct dump_call_arg {
 #else
 
 // Make it work with vanilla ruby (including 2.0)
+#ifndef TABLE_FOREACH
 #define TABLE_FOREACH st_foreach
+#endif
+
+#ifndef RCLASS_IV_INDEX_TBL
+#define RCLASS_IV_INDEX_TBL(c) (RCLASS(c)->iv_index_tbl)
+#endif
 
 #endif
 
