@@ -10,6 +10,10 @@ struct dump_call_arg {
   VALUE src;
 };
 
+// #define DC_DEBUG 0
+
+#define OBJ_UNFREEZE(x) FL_UNSET((x), FL_FREEZE)
+
 #ifdef SA_EMPTY
 
 // Gotta do this because of 1.9.3's falcon patch
@@ -25,15 +29,9 @@ struct dump_call_arg {
 #define RCLASS_IV_INDEX_TBL(c) (&RCLASS_EXT(c)->iv_index_tbl)
 
 #else
-
 // Make it work with vanilla ruby (including 2.0)
-#ifndef TABLE_FOREACH
-#define TABLE_FOREACH st_foreach
-#endif
-
-#ifndef RCLASS_IV_INDEX_TBL
 #define RCLASS_IV_INDEX_TBL(c) (RCLASS(c)->iv_index_tbl)
-#endif
+#define TABLE_FOREACH st_foreach
 
 #endif
 
