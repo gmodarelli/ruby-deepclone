@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    deep_clone (0.1.0)
+    deep_clone (0.2.0)
 
 GEM
   remote: http://rubygems.org/
