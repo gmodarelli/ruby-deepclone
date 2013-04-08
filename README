@@ -5,5 +5,5 @@ o1 = Object.new
 o2 = DeepClone.clone o1
 
 
-gem install deep_clone
+gem install ruby_deep_clone
 
