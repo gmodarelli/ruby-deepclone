@@ -1,4 +1,11 @@
 require 'spec_helper'
+module Something
+  attr_accessor :z
+
+  def shizzle
+    "nizzle"
+  end
+end
 
 class Bar
   attr_accessor :a, :b, :c
@@ -10,6 +17,14 @@ class Bar
 end
 
 class Foo
+  include Something
+
+  SOME_CONST = [
+    1, 2, 3, :omg
+  ]
+
+  attr_reader :x
+
   attr_accessor :a, :b, :c, :d, :e
   def initialize
     @a = [ Time.new, Time.new ]
@@ -17,13 +32,21 @@ class Foo
     @c ={"a" => 1, "b" => 2, "c" => 3}
     @d = "dfgdfhf"
     @e = Bar.new
+    @x = 42
   end
+
+  def self.foo; :bar; end
 end
 
 
 describe DeepClone do
   describe '.clone' do
     it 'should clone a class' do
+      a = { :cfoo => Foo, :cbar => Bar }
+      baz = DeepClone.clone a
+    end
+
+    it 'should clone an instance of a class' do
       f1 = Foo.new
       f2 = DeepClone.clone(f1)
 
@@ -53,6 +76,8 @@ describe DeepClone do
 
       expect(f2.e.a[3]).to be_nil
       expect(f1.c["d"]).to be_nil
+
+      expect(f2.shizzle).to eq("nizzle")
     end
   end
 end

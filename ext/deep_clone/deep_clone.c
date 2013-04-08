@@ -1,4 +1,29 @@
 #include "deep_clone.h"
+int ident = 0;
+
+void
+inspect(VALUE val) {
+#ifdef DC_DEBUG
+  int i;
+  for(i = 0; i <= ident-1; i++) {
+    printf("\t");
+  }
+  printf("BEFORE %d ", BUILTIN_TYPE(val));
+  printf("INSPECT: %s\n", RSTRING_PTR(rb_any_to_s(val)));
+#endif
+}
+
+void
+inspect_kvp(ID key, VALUE val) {
+#ifdef DC_DEBUG
+  int i;
+  for(i = 0; i <= ident-1; i++) {
+    printf("\t");
+  }
+  printf("BEFORE %s %d %d", RSTRING_PTR(rb_inspect(ID2SYM(key))), val);
+  printf("VALUE: %s => %s\n", RSTRING_PTR(rb_inspect(ID2SYM(key))), RSTRING_PTR(rb_any_to_s(val)));
+#endif
+}
 
 void Init_deep_clone()
 {
@@ -8,8 +33,9 @@ void Init_deep_clone()
 
 static int clone_variable(st_data_t key, st_data_t index, struct dump_call_arg *arg)
 {
-  VALUE val = ROBJECT_IVPTR(arg->src)[(long)index];
-  rb_ivar_set(arg->obj, key, clone_object(val,arg->tracker));
+  VALUE val = rb_ivar_get(arg->obj, (ID)key);// ROBJECT_IVPTR(arg->src)[(long)index];
+  inspect_kvp((ID)key, val);
+  rb_ivar_set(arg->obj, (ID)key, clone_object(val,arg->tracker));
   return ST_CONTINUE;
 }
 
@@ -24,16 +50,20 @@ static VALUE clone_object(VALUE object, VALUE tracker)
   if(rb_special_const_p(object))
     return object;
 
+  inspect(object);
+
   VALUE new_obj;
   VALUE id = rb_obj_id(object);
 
   if(st_lookup(RHASH_TBL(tracker), id, 0)) {
     new_obj = rb_hash_aref(tracker,id);
   } else {
+    ident++;
     switch (BUILTIN_TYPE(object)) {
       case T_ARRAY:
         new_obj = rb_ary_new2(RARRAY_LEN(object));
         long len = RARRAY_LEN(object);
+        if(len == 0) break;
         rb_hash_aset(tracker,id,new_obj);
         VALUE *ptr = RARRAY_PTR(object);
         while (len--) {
@@ -61,19 +91,28 @@ static VALUE clone_object(VALUE object, VALUE tracker)
       case T_TRUE:
       case T_FALSE:
       case T_FIXNUM:
+      case T_STRUCT:
+      case T_FILE:
         new_obj = object;
         rb_hash_aset(tracker,id,new_obj);
         break;
       default:
         new_obj = rb_obj_clone(object);
+
+        // Unfreeze the new object
+        OBJ_UNFREEZE(new_obj);
+
         rb_hash_aset(tracker,id,new_obj);
         st_table *tbl = ROBJECT_IV_INDEX_TBL(object);
         if(tbl) {
           struct dump_call_arg arg = {new_obj,tracker, object};
           TABLE_FOREACH(tbl, clone_variable, (st_data_t)&arg);
         }
+
+        if(OBJ_FROZEN(object)) OBJ_FREEZE(new_obj);
         break;
     }
+    ident--;
   }
   return new_obj;
 }

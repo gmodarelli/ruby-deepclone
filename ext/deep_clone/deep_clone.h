@@ -10,6 +10,10 @@ struct dump_call_arg {
   VALUE src;
 };
 
+// #define DC_DEBUG 0
+
+#define OBJ_UNFREEZE(x) FL_UNSET((x), FL_FREEZE)
+
 #ifdef SA_EMPTY
 
 // Gotta do this because of 1.9.3's falcon patch
