@@ -33,9 +33,11 @@ void Init_deep_clone()
 
 static int clone_variable(st_data_t key, st_data_t index, struct dump_call_arg *arg)
 {
-  VALUE val = rb_ivar_get(arg->obj, (ID)key);// ROBJECT_IVPTR(arg->src)[(long)index];
+  VALUE val = rb_ivar_get(arg->obj, (ID)key);
   inspect_kvp((ID)key, val);
-  rb_ivar_set(arg->obj, (ID)key, clone_object(val,arg->tracker));
+  // Check if value is nil. For some reason, if you "force" an instance value
+  // to nil, the ||= operator won't work.
+  if(!NIL_P(val)) rb_ivar_set(arg->obj, (ID)key, clone_object(val,arg->tracker));
   return ST_CONTINUE;
 }
 
