@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    deep_clone (0.3.0)
+    ruby_deep_clone (0.3.0)
 
 GEM
   remote: http://rubygems.org/
@@ -23,7 +23,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  deep_clone!
   rake (~> 10.0.4)
   rake-compiler (~> 0.8.3)
   rspec (~> 2.13.0)
+  ruby_deep_clone!
