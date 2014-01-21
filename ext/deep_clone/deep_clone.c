@@ -105,7 +105,8 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         OBJ_UNFREEZE(new_obj);
 
         rb_hash_aset(tracker,id,new_obj);
-        st_table *tbl = ROBJECT_IV_INDEX_TBL(object);
+        st_table *tbl = DC_ROBJECT_IV_INDEX_TBL(object);
+
         if(tbl) {
           struct dump_call_arg arg = {new_obj,tracker, object};
           TABLE_FOREACH(tbl, clone_variable, (st_data_t)&arg);
