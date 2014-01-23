@@ -81,5 +81,10 @@ describe DeepClone do
         expect(DeepClone.clone(regex).object_id).to_not eql(regex.object_id)
       end
     end
+
+    it 'should not clone a Numeric' do
+      num = Numeric.new
+      expect(DeepClone.clone(num).object_id).to eql(num.object_id)
+    end
   end
 end

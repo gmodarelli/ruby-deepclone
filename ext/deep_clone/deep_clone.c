@@ -99,20 +99,25 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         rb_hash_aset(tracker,id,new_obj);
         break;
       default:
-        new_obj = rb_obj_clone(object);
+        if(rb_obj_is_kind_of(object,rb_cNumeric)){
+          new_obj = object;
+          rb_hash_aset(tracker,id,new_obj);
+        } else {
+          new_obj = rb_obj_clone(object);
 
-        // Unfreeze the new object
-        OBJ_UNFREEZE(new_obj);
+          // Unfreeze the new object
+          OBJ_UNFREEZE(new_obj);
 
-        rb_hash_aset(tracker,id,new_obj);
-        st_table *tbl = DC_ROBJECT_IV_INDEX_TBL(object);
+          rb_hash_aset(tracker,id,new_obj);
+          st_table *tbl = DC_ROBJECT_IV_INDEX_TBL(object);
 
-        if(tbl) {
-          struct dump_call_arg arg = {new_obj,tracker, object};
-          TABLE_FOREACH(tbl, clone_variable, (st_data_t)&arg);
+          if(tbl) {
+            struct dump_call_arg arg = {new_obj,tracker, object};
+            TABLE_FOREACH(tbl, clone_variable, (st_data_t)&arg);
+          }
+
+          if(OBJ_FROZEN(object)) OBJ_FREEZE(new_obj);
         }
-
-        if(OBJ_FROZEN(object)) OBJ_FREEZE(new_obj);
         break;
     }
     ident--;
