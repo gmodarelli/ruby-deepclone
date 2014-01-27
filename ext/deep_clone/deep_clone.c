@@ -81,7 +81,11 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         break;
       case T_STRING:
       case T_DATA:
-        new_obj = rb_obj_clone(object);
+        if(rb_obj_is_kind_of(object,rb_cNumeric)){
+          new_obj = object;
+        } else {
+          new_obj = rb_obj_clone(object);
+        }
         rb_hash_aset(tracker,id,new_obj);
         break;
       case T_CLASS:
