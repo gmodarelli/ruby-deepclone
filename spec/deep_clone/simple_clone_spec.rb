@@ -41,6 +41,11 @@ describe DeepClone do
       expect(DeepClone.clone(symbol).object_id).to eql(symbol.object_id)
     end
 
+    it 'should not clone a non literal a Symbol' do
+      sym = "foo".to_sym
+      expect(DeepClone.clone(sym).object_id).to eql(sym.object_id)
+    end
+
     it 'should clone a string' do
       s1 = "Ruby is awesome!"
       s2 = DeepClone.clone s1
@@ -85,6 +90,38 @@ describe DeepClone do
     it 'should not clone a Numeric' do
       num = Numeric.new
       expect(DeepClone.clone(num).object_id).to eql(num.object_id)
+    end
+
+    it 'should clone a hash with non literal symbol keys' do
+      foo = {}
+      foo["foo".to_sym] = "foo"
+      foo["bar".to_sym] = "bar"
+
+      clone = DeepClone.clone foo
+      expect(clone.object_id).to_not eql(foo)
+      expect(clone).to eql(foo)
+    end
+
+    it 'should clone an object with a hash property' do
+      class ClassWithHash
+        attr_reader :h
+
+        def initialize(h)
+          @h = h
+        end
+      end
+
+      foo = {}
+      foo["foo".to_sym] = "foo"
+      foo["bar".to_sym] = "bar"
+
+      obj = ClassWithHash.new foo
+
+      clone = DeepClone.clone obj
+      expect(clone.object_id).to_not eql(obj)
+      expect(clone.h.object_id).to_not eql(obj.h.object_id)
+      expect(clone.h).to eql(obj.h)
+      expect(clone.h).to eql(foo)
     end
   end
 end
