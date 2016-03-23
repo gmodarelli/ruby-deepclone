@@ -81,7 +81,7 @@ describe DeepClone do
     end
 
     it 'should clone a non-literal Regexp' do
-      pending "/okay/.clone is not normally allowed..." do
+      skip "/okay/.clone is not normally allowed..." do
         regex = Regexp.new('okay')
         expect(DeepClone.clone(regex).object_id).to_not eql(regex.object_id)
       end
