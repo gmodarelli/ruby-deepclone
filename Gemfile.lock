@@ -23,9 +23,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rake (~> 10.0)
+  rake (~> 10.5)
   rake-compiler (~> 0.8.3)
-  rspec (~> 2.13)
+  rspec (~> 2.99)
   ruby_deep_clone!
 
 BUNDLED WITH

@@ -12,13 +12,13 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/balmma/ruby-deepclone'
   s.license = 'MIT'
   
-  #s.specification_version = 2 if s.respond_to? :specification_version=
-  #s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-
-  s.files = Dir.glob('ext/**/*.{c,rb}') +
-            Dir.glob('lib/**/*.rb')
-  
   s.extensions << 'ext/deep_clone/extconf.rb'
+  
+  #s.require_paths = ['ext', 'lib']
+
+  s.files = ['deep_clone.gemspec'] +
+            Dir.glob('lib/**/*.rb') +
+            Dir.glob('ext/**/*.{c,h,rb}')
 
   s.add_development_dependency 'rake', '~> 10.5'
   s.add_development_dependency 'rake-compiler', '~> 0.8.3'
