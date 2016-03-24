@@ -1,1 +1,1 @@
-require "deep_clone/deep_clone"
+require 'deep_clone/deep_clone'
