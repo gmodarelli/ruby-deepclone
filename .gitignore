@@ -3,3 +3,4 @@ tmp
 Makefile
 *.o
 *.bundle
+*.gem
