@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'json'
 
 describe DeepClone do
   describe '.clone' do
@@ -48,6 +49,13 @@ describe DeepClone do
       s2 = DeepClone.clone s1
 
       expect(s1.object_id).to_not eq(s2.object_id)
+    end
+
+    it 'should clone dynamic symbols' do
+      hash = JSON.parse('{"abc": 1, "bcd": 1, "cef": 1 }', symbolize_names: true)
+      hash2 = DeepClone.clone hash
+
+      expect(hash.object_id).to_not eq(hash2.object_id)
     end
   end
 end
