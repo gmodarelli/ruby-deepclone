@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'ruby_deep_clone'
-  s.version = '0.7.3'
+  s.version = '0.7.4'
   s.date = '2017-08-03'
 
   s.summary = 'Ruby native deep clone'
