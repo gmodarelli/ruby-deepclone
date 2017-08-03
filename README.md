@@ -5,7 +5,7 @@
 |System|Status|
 |--|--|
 | Travis | [![Travis Build Status](https://travis-ci.org/gmodarelli/ruby-deepclone.svg?branch=master)](https://travis-ci.org/gmodarelli/ruby-deepclone) |
-| Gem Version | [![Gem Version](https://badge.fury.io/rb/deep_clone.svg)](https://badge.fury.io/rb/deep_clone) |
+| Gem Version | [![Gem Version](https://badge.fury.io/rb/ruby_deep_clone.svg)](https://badge.fury.io/rb/ruby_deep_clone) |
 
 ## Description
 
