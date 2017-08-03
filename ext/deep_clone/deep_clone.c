@@ -58,7 +58,7 @@ static int hash_each(VALUE key, VALUE value, struct dump_call_arg *arg)
 
 static VALUE clone_object(VALUE object, VALUE tracker)
 {
-  if(rb_special_const_p(object) || RB_SYMBOL_P(object))
+  if(rb_special_const_p(object) || SYMBOL_P(object))
   {
     return object;
   }
