@@ -6,6 +6,7 @@
 |--|--|
 | Travis | [![Travis Build Status](https://travis-ci.org/gmodarelli/ruby-deepclone.svg?branch=master)](https://travis-ci.org/gmodarelli/ruby-deepclone) |
 | Gem Version | [![Gem Version](https://badge.fury.io/rb/ruby_deep_clone.svg)](https://badge.fury.io/rb/ruby_deep_clone) |
+| Code Climante | [![Code Climate](https://codeclimate.com/github/gmodarelli/ruby_deep_clone/badges/gpa.svg)](https://codeclimate.com/github/gmodarelli/ruby_deep_clone)
 
 ## Description
 
