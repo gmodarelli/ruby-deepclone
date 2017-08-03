@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'ruby_deep_clone'
-  s.version = '0.7.4'
+  s.version = '0.8.0'
   s.date = '2017-08-03'
 
   s.summary = 'Ruby native deep clone'
@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency('rake', '~> 10.5')
   s.add_development_dependency('rake-compiler', '~> 0.8.3')
-  s.add_development_dependency('rspec', '~> 3.6.0')
+  s.add_development_dependency('rspec', '~> 3.6')
 end
