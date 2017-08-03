@@ -4,10 +4,4 @@ require "deep_clone"
 o1 = Object.new
 o2 = DeepClone.clone o1
 
-
 gem install ruby_deep_clone
-
-It's not production ready
-https://github.com/balmma/ruby-deepclone/issues/8
-
-And it's not maintained anymore. Please send me a message if you want to take the ownership of it.
