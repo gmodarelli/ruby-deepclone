@@ -9,13 +9,13 @@ Gem::Specification.new do |s|
   s.authors = ['Matthias Balmer', 'Andre Medeiros', 'Anthony Williams']
   s.email = ['balmma@sysinf.ch', 'me@andremedeiros.info', 'hi@antw.io']
 
-  s.homepage = 'https://github.com/balmma/ruby-deepclone'
+  s.homepage = 'https://github.com/gmodarelli/ruby-deepclone'
   s.license = 'MIT'
 
   s.extensions = ['ext/deep_clone/extconf.rb']
 
   s.files = Dir.glob('lib/**/*.rb') +
-            Dir.glob('ext/**/*.{c,rb}')
+            Dir.glob('ext/**/*.{c,h,rb}')
 
   s.add_development_dependency('rake', '~> 10.5')
   s.add_development_dependency('rake-compiler', '~> 0.8.3')
