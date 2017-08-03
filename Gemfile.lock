@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_deep_clone (0.7.1)
+    ruby_deep_clone (0.7.4)
 
 GEM
   remote: https://rubygems.org/
@@ -29,4 +29,4 @@ DEPENDENCIES
   ruby_deep_clone!
 
 BUNDLED WITH
-   1.11.2
+   1.13.7
