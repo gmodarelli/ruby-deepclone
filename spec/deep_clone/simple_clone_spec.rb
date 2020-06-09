@@ -123,5 +123,12 @@ describe DeepClone do
       expect(clone.h).to eql(obj.h)
       expect(clone.h).to eql(foo)
     end
+
+    it 'should clone a Proc' do
+      p = proc { true }
+      clone = DeepClone.clone(p)
+      expect(clone.object_id).to_not eql(p.object_id)
+      expect(clone.call).to eq(true)
+    end
   end
 end

@@ -111,6 +111,10 @@ static VALUE clone_object(VALUE object, VALUE tracker)
         {
           new_obj = object;
         }
+        else if (rb_obj_is_kind_of(object, rb_cProc))
+        {
+          new_obj = rb_funcall(object, rb_intern("clone"), 0);
+        }
         else
         {
           new_obj = rb_obj_clone(object);
