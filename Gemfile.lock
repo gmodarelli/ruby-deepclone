@@ -7,7 +7,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.3)
-    rake (10.5.0)
+    rake (12.3.3)
     rake-compiler (0.8.3)
       rake
     rspec (3.6.0)
@@ -28,7 +28,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rake (~> 10.5)
+  rake (~> 12.3)
   rake-compiler (~> 0.8.3)
   rspec (~> 3.6)
   ruby_deep_clone!
