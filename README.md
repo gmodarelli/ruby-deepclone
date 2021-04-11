@@ -1,5 +1,7 @@
 # Deep Clone
 
+This repository is no longer maintained and it's looking for a new owner :) If you'd like to take over please file an issue.
+
 ## Status
 
 |System|Status|
